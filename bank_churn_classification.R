@@ -156,15 +156,11 @@ lr_roc |>
 
 ### Confusion Matrix 
 
-cm_lr <- caret::confusionMatrix(lr_preds_combined$Exited,
+caret::confusionMatrix(lr_preds_combined$Exited,
                                 lr_preds_combined$class,
                                 positive = "1")
 
-print(cm_lr)
-
-
-cm_rf <- caret::confusionMatrix(rf_preds_combined$Exited,
+caret::confusionMatrix(rf_preds_combined$Exited,
                                 rf_preds_combined$class,
                                 positive = "1")
 
-print(cm_rf)
