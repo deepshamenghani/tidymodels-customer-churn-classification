@@ -138,7 +138,7 @@ rf_preds_combined <-
 
 lr_roc <- lr_preds_combined |> 
   roc_curve(truth = Exited, prob_no) |> 
-  mutate(model = "Linear model") 
+  mutate(model = "Logistic regression") 
 
 rf_roc <- rf_preds_combined |> 
   roc_curve(truth = Exited, prob_no) |> 
@@ -151,7 +151,8 @@ lr_roc |>
   geom_abline(lty = 2) +
   labs(y = "True Positive Rate", 
        x = "False Positive Rate",
-       title = "ROC curve") +
+       title = "ROC curve",
+       color = "Model") +
   theme_bw()
 
 ### Confusion Matrix 
