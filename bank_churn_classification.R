@@ -157,11 +157,11 @@ lr_roc |>
 
 ### Confusion Matrix 
 
-caret::confusionMatrix(lr_preds_combined$Exited,
-                                lr_preds_combined$class,
+caret::confusionMatrix(lr_preds_combined$class,
+                                lr_preds_combined$Exited,
                                 positive = "1")
 
-caret::confusionMatrix(rf_preds_combined$Exited,
-                                rf_preds_combined$class,
+caret::confusionMatrix(rf_preds_combined$class,
+                                rf_preds_combined$Exited,
                                 positive = "1")
 
