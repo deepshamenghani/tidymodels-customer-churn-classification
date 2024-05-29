@@ -82,19 +82,33 @@ xgb_res %>%
   roc_curve(Exited, .pred_1) |> 
   autoplot()
 
-# Fitting the XGBoost model on the entire training data
+# Pull model from cross-validation
+# Extract the best model based on ROC AUC
+best_params <- xgb_res |> 
+  select_best(metric = "roc_auc")
+
+# Finalize the workflow with the best parameters
+final_xgb_workflow <- xgb_workflow |> 
+  finalize_workflow(best_params)
+
+# Fit the final model on the entire training dataset and evaluate on the test dataset
 doParallel::registerDoParallel()
-final_fit <- xgb_workflow |> 
+final_fit <- final_xgb_workflow |> 
   last_fit(bc_split)
 
-# Predicting on the test data and collecting metrics
-final_fit |> 
-  collect_metrics()
-
+# Collecting the final predictions
 test_predictions <- final_fit |> 
   collect_predictions()
 
-# Visualizing the ROC curve
+# Collecting the final metrics
+final_metrics <- final_fit |> 
+  collect_metrics()
+
+# Visualizing the ROC curve for the final model
 test_predictions |> 
   roc_curve(truth = Exited, .pred_1) |>
   autoplot()
+
+# Print final metrics
+print(final_metrics)
+
